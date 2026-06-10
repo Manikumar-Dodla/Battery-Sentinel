@@ -1,5 +1,7 @@
 import time
 import os
+from pathlib import Path
+
 import psutil
 import winsound
 import tkinter as tk
@@ -18,8 +20,14 @@ RED_SCREEN_WARNING = 90
 NORMAL_CHECK_INTERVAL = 300  # 5 minutes
 LOW_BATTERY_INTERVAL = 60    # 1 minute
 
+# ==========================
+# Log File Configuration
+# ==========================
+
 current_year = time.strftime("%Y")
-LOG_FILE = rf"C:\Projects\Battery\Logs_{current_year}.txt"
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+LOG_FILE = SCRIPT_DIR / f"Logs_{current_year}.txt"
 
 # ==========================
 # Alert Flags
@@ -104,9 +112,7 @@ def hibernate_system():
 # Startup Logging
 # ==========================
 
-write_log("=" * 60)
-write_log(f"Battery Monitor Started - {current_year}")
-write_log("=" * 60)
+write_log("Battery Monitor Started")
 
 # ==========================
 # Initial Battery State
@@ -267,5 +273,4 @@ except Exception as e:
     write_log(f"Unhandled Exception | {str(e)}")
 
 finally:
-    write_log(f"Battery Monitor Exited - {current_year}")
-    write_log("=" * 60)
+    write_log("Battery Monitor Exited")
